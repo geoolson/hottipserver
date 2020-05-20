@@ -1,0 +1,19 @@
+{
+  "name": "hottipserver",
+  "version": "1.0.0",
+  "description": "server code for the hottip application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geoolson/hottipserver.git"
+  },
+  "author": "Geoffrey Olson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/geoolson/hottipserver/issues"
+  },
+  "homepage": "https://github.com/geoolson/hottipserver#readme"
+}
