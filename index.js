@@ -35,9 +35,8 @@ app.get('/api/*/*', (req, res) => {
     const pathSplit = req.path.split('/');
     const lat = parseFloat(pathSplit[2]);
     const lng = parseFloat(pathSplit[3]);
-    let result = []
     db.serialize(function () {
-        db.each(`
+        db.all(`
         SELECT *
         FROM tips
         WHERE
@@ -45,10 +44,9 @@ app.get('/api/*/*', (req, res) => {
         AND lat <  ${lat} + ${latRange}
         AND lng > ${lng} - ${lngRange}
         AND lng < ${lng} + ${lngRange}
-        `, function(err, row){
-            result = [...result, row]
+        `, function(err, rows){
+            res.json(rows);
         });
-        res.json(result);
     });
 });
 
@@ -60,10 +58,19 @@ app.post('/api/addtip/*/*/*/*', (req, res) => {
     const subtotal = parseFloat(pathSplit[6]);
     console.log(lat, lng, tip, subtotal)
     db.serialize(function () {
-        let stmt = db.prepare("INSERT INTO tips VALUES (?,?,?,?,?)");
+        let stmt = db.prepare("INSERT INTO tips VALUES(?,?,?,?,?)");
         stmt.run("testing", lat, lng, tip, subtotal);
         stmt.finalize();
-        res.end();
+        res.json({});
+    });
+});
+
+app.get('/test', (req, res) => {
+    db.serialize(function () {
+        let result = [];
+        db.all(`SELECT * FROM tips`, function(err, rows){
+            res.json(rows);
+        });
     });
 });
 
